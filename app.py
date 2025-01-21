@@ -13,7 +13,7 @@ app = Flask(__name__)
 CORS(app)
 
 # تحميل بيانات تسجيل الدخول إلى Firebase
-cred = credentials.Certificate("echo-10c66-firebase-adminsdk-3c0kw-5218e7d512.json")  # استبدل بالمسار الصحيح للمفتاح
+cred = credentials.Certificate("echo.json")  # استبدل بالمسار الصحيح للمفتاح
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://echo-10c66-default-rtdb.firebaseio.com/'  # استبدل برابط قاعدة بياناتك
 })
