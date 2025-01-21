@@ -34,6 +34,12 @@
 
         // Customizing the appearance of the WebApp
         tg.expand();
+
+        // Listen for data sent from the WebApp in the bot
+        tg.onEvent('data', function(data) {
+            console.log("Received data:", data);
+            // You can also handle the received data here
+        });
     </script>
 </body>
 </html>
