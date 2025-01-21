@@ -19,23 +19,29 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        function registerUser() {
-            const userData = {
-                user_id: tg.initDataUnsafe.user.id,
-                username: tg.initDataUnsafe.user.username
-            };
+      function registerUser() {
+    const userData = {
+        user_id: tg.initDataUnsafe.user.id,
+        username: tg.initDataUnsafe.user.username
+    };
 
-            fetch('https://embaby.pythonanywhere.com/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userData)
-            })
-            .then(response => response.json())
-            .then(data => alert(data.message))
-            .catch(error => alert("Error: " + error));
+    fetch('https://embaby.pythonanywhere.com/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+        return response.json();
+    })
+    .then(data => alert(data.message))
+    .catch(error => alert("Error: " + error));
+}
+
 
         function viewAds() {
             const userData = {
