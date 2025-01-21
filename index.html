@@ -7,45 +7,52 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body { text-align: center; padding: 20px; font-family: Arial; }
-        button { padding: 10px 20px; font-size: 18px; }
+        button { padding: 10px 20px; font-size: 18px; margin: 10px; }
     </style>
 </head>
 <body>
     <h1>Welcome to Power Earn App</h1>
-    <p>Click the button to interact</p>
-  <button onclick="sendMessage()">إرسال البيانات إلى السيرفر</button>
+    <button onclick="registerUser()">Register</button>
+    <button onclick="viewAds()">View Ads</button>
 
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
 
- <script>
-    let tg = window.Telegram.WebApp;
-    tg.expand();  // توسيع التطبيق ليظهر بحجم الشاشة الكامل
+        function registerUser() {
+            const userData = {
+                user_id: tg.initDataUnsafe.user.id,
+                username: tg.initDataUnsafe.user.username
+            };
 
-    function sendMessage() {
-        let userData = {
-            user_id: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : "unknown",
-            username: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.username : "guest",
-            message: "Hello from Power Earn App!"
-        };
+            fetch('https://embaby.pythonanywhere.com/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => alert("Error: " + error));
+        }
 
-        // إرسال البيانات إلى السيرفر
-        fetch('https://embaby.pythonanywhere.com/webhook', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert("Server Response: " + data.message);
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Failed to send data to the server.");
-        });
-    }
-</script>
+        function viewAds() {
+            const userData = {
+                user_id: tg.initDataUnsafe.user.id
+            };
 
-
+            fetch('https://embaby.pythonanywhere.com/get_ads', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            })
+            .then(response => response.json())
+            .then(data => alert("Check Telegram for ads!"))
+            .catch(error => alert("Error: " + error));
+        }
+    </script>
 </body>
 </html>
