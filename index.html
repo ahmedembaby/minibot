@@ -20,7 +20,7 @@
     <div class="content">
         <h1>Welcome to my Telegram Web App!</h1>
         <p>Click the button below to send a message via Telegram Bot:</p>
-        <button id="sendMessageBtn">Send</button>
+        <button id="sendMessageBtn">Send Message</button>
     </div>
 
     <script>
@@ -29,16 +29,16 @@
 
         // Function to send a message via Telegram Bot
         document.getElementById("sendMessageBtn").addEventListener("click", () => {
+            // Sending custom data to the Telegram bot
             tg.sendData("Hello from the Web App!");
         });
 
         // Customizing the appearance of the WebApp
         tg.expand();
 
-        // Listen for data sent from the WebApp in the bot
+        // Optionally listen for custom events if needed
         tg.onEvent('data', function(data) {
             console.log("Received data:", data);
-            // You can also handle the received data here
         });
     </script>
 </body>
