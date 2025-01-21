@@ -15,13 +15,34 @@
     <p>Click the button to interact</p>
     <button onclick="sendMessage()">Send Message</button>
 
-    <script>
-        let tg = window.Telegram.WebApp;
-        tg.expand();  // Expands the app to full screen
+  <script>
+    let tg = window.Telegram.WebApp;
+    tg.expand();  // توسيع التطبيق ليظهر بحجم الشاشة الكامل
 
-        function sendMessage() {
-            tg.sendData("Hello from Power Earn App!");  // Sends data to the bot
-        }
-    </script>
+    function sendDataToServer() {
+        let userData = {
+            user_id: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : "unknown",
+            username: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.username : "guest",
+            message: "تم الإرسال من التطبيق المصغر"
+        };
+
+        fetch('https://embaby.pythonanywhere.com/webhook', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert("الاستجابة من السيرفر: " + data.message);
+        })
+        .catch(error => {
+            console.error("حدث خطأ:", error);
+            alert("فشل إرسال البيانات");
+        });
+    }
+</script>
+
 </body>
 </html>
