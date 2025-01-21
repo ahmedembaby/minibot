@@ -16,17 +16,18 @@
   <button onclick="sendDataToServer()">إرسال البيانات إلى السيرفر</button>
 
 
-  <script>
+ <script>
     let tg = window.Telegram.WebApp;
     tg.expand();  // توسيع التطبيق ليظهر بحجم الشاشة الكامل
 
-    function sendDataToServer() {
+    function sendMessage() {
         let userData = {
             user_id: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : "unknown",
             username: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.username : "guest",
-            message: "تم الإرسال من التطبيق المصغر"
+            message: "Hello from Power Earn App!"
         };
 
+        // إرسال البيانات إلى السيرفر
         fetch('https://embaby.pythonanywhere.com/webhook', {
             method: 'POST',
             headers: {
@@ -36,14 +37,15 @@
         })
         .then(response => response.json())
         .then(data => {
-            alert("الاستجابة من السيرفر: " + data.message);
+            alert("Server Response: " + data.message);
         })
         .catch(error => {
-            console.error("حدث خطأ:", error);
-            alert("فشل إرسال البيانات");
+            console.error("Error:", error);
+            alert("Failed to send data to the server.");
         });
     }
 </script>
+
 
 </body>
 </html>
